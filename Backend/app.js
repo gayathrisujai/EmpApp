@@ -1,18 +1,20 @@
-const express = require('express');
-const app = new express();
-const morgan = require('morgan')
-app.use(morgan('dev'));
-const port=process.env.port
-
-const route = require('./routes/basicroutes');
-app.use('/home', route);
+const express =require('express');
+const rout=require('./routes/basicroutes');
+require ('./db/connection');
+const user_route=require('./routes/userRoutes')
+const cors =require('cors');
 
 require('dotenv').config();
-require('./db/connection')
+const port=process.env.port
+// app.use('/')
 
 
+const app = new express();
+app.use(cors());
+app.use('/home',rout);
+app.use('/user',user_route)
 
 
-app.listen(port, () => {
+app.listen(port,()=>{
     console.log(`server is running on port ${port}`);
 })
